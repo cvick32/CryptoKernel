@@ -466,7 +466,7 @@ public:
             const CryptoKernel::BigNum& previousBlockId, const std::string& publicKey) = 0;
 
     /**
-    * Callback for custom transaction behavior when when the blockchain needs to check
+    * Callback for custom transaction behavior when the blockchain needs to check
     * a transaction's validity. Should return true iff the given transaction is valid given
     * the current state of the blockchain according to any custom rules.
     *
