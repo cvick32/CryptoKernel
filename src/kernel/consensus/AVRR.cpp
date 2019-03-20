@@ -14,7 +14,7 @@ CryptoKernel::Consensus::AVRR::~AVRR() {
 }
 
 void CryptoKernel::Consensus::AVRR::start() {
-  rrThread.reset(new CryptoKernel::Consensus::AVRR::roundRobin(), this);
+  rrThread.reset(new &CryptoKernel::Consensus::AVRR::roundRobin(), this);
 }
 
 void CryptoKernel::Consensus::AVRR::roundRobin() {
