@@ -517,6 +517,7 @@ public:
     class AVRR;
     class Raft;
     class Regtest;
+    class CB;
 };
 }
 
