@@ -1,7 +1,9 @@
 #ifndef AVRR_H_INCLUDED
 #define AVRR_H_INCLUDED
 
+#include <thread>
 #include "../blockchain.h"
+
 
 namespace CryptoKernel {
 /**
@@ -78,6 +80,8 @@ public:
     bool submitBlock(const CryptoKernel::Blockchain::block& block);
 
     void start();
+
+    void roundRobin();
 private:
     std::set<std::string> verifiers;
     uint64_t blockTarget;
