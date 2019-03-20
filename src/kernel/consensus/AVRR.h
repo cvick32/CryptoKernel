@@ -81,6 +81,7 @@ public:
 private:
     std::set<std::string> verifiers;
     uint64_t blockTarget;
+    bool running;
     struct consensusData {
         uint64_t sequenceNumber;
         std::string signature;

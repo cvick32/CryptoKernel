@@ -17,7 +17,7 @@ void CryptoKernel::Consensus::AVRR::start() {
   rrThread.reset(new CryptoKernel::Consensus::AVRR::roundRobin(), this);
 }
 
-void CryptoKernel::Consensus:AVRR::roundRobin() {
+void CryptoKernel::Consensus::AVRR::roundRobin() {
   time_t t = std::time(0);
   uint64_t now = static_cast<uint64_t> (t);
 
