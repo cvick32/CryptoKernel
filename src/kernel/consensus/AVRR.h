@@ -22,6 +22,8 @@ public:
     */
     AVRR(const std::set<std::string>& verifiers, const uint64_t blockTarget);
 
+    virtual ~AVRR();
+
     /**
     * In AVRR, a block displaces the current block tip if it is at least as high
     * as the current tip but has a lower sequence number. This ensures that an earlier
@@ -74,6 +76,8 @@ public:
     * Has no effect, always returns true
     */
     bool submitBlock(const CryptoKernel::Blockchain::block& block);
+
+    void start();
 private:
     std::set<std::string> verifiers;
     uint64_t blockTarget;
@@ -84,6 +88,7 @@ private:
     };
     consensusData getConsensusData(const CryptoKernel::Blockchain::block& block);
     Json::Value consensusDataToJson(const consensusData& data);
+    std::unique_ptr<std::thread> rrThread;
 };
 }
 

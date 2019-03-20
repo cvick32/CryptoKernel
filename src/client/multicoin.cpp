@@ -111,7 +111,14 @@ std::unique_ptr<CryptoKernel::Consensus> CryptoKernel::MulticoinLoader::getConse
                                                  config["miner"].asBool(),
                                                  config["pubKey"].asString(),
                                                  log));
-    } else {
+    } else if (name = "CB") {
+      return std::unique_ptr<CryptoKernel::Consensus>(
+        new Consensus::CB(blockchain, config["pubKey"].asString(), log));
+    } else if (name = "AVRR") {
+      return std::unique_ptr<CryptoKernel::Consensus>(
+        new Consensus::AVRR(config["verifiers"], params["blocktime"].asUInt64())
+      );
+    }  else {
         throw std::runtime_error("Unknown consensus algorithm " + name);
     }
 }

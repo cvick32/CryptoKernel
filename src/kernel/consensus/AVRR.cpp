@@ -5,6 +5,30 @@ CryptoKernel::Consensus::AVRR::AVRR(const std::set<std::string>& verifiers,
                                     const uint64_t blockTarget) {
     this->verifiers = verifiers;
     this->blockTarget = blockTarget;
+    running = true;
+}
+
+CryptoKernel::Consensus::AVRR::~AVRR() {
+  running = false;
+  rrThread->join();
+}
+
+void CryptoKernel::Consensus::AVRR::start() {
+  rrThread.reset(new CryptoKernel::Consensus::AVRR::roundRobin(), this);
+}
+
+void CryptoKernel::Consensus:AVRR::roundRobin() {
+  time_t t = std::time(0);
+  uint64_t now = static_cast<uint64_t> (t);
+
+  while(running) {
+    // find block sequence number
+    // check if its our turn
+    // if its not, do nothing
+    // if it is, build a block and sign it
+    
+  }
+
 }
 
 bool CryptoKernel::Consensus::AVRR::isBlockBetter(const CryptoKernel::Blockchain::dbBlock&

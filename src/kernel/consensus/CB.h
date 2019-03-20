@@ -29,7 +29,7 @@ public:
     virtual ~CB();
 
     /**
-    * Just checks if the new block is higher than the current block.
+    * Check if the block is higher and signed by the CB.
     */
     bool isBlockBetter(Storage::Transaction* transaction,
                        const CryptoKernel::Blockchain::block& block,
@@ -44,20 +44,24 @@ public:
                              const CryptoKernel::Blockchain::dbBlock& previousBlock);
 
     /**
-    * Probably just the Central Bank pub key
+    * Probably just return the Central Bank pub key.
     */
     Json::Value generateConsensusData(Storage::Transaction* transaction,
                                       const CryptoKernel::BigNum& previousBlockId, const std::string& publicKey);
  
     /**
-    * Always return true.
+    * Always return true. No custom functionality.
     */ 
     virtual bool verifyTransaction(Storage::Transaction* transaction, 
                                   const CryptoKernel::Blockchain::transaction& tx);
-
+    /**
+    * Always return true. No custom functionality.
+    */   
     virtual bool confirmTransaction(Storage::Transaction* transaction,
                                     const CryptoKernel::Blockchain::transaction& tx);
-
+    /**
+    * Always return true. No custom functionality. 
+    */ 
     virtual bool submitTransaction(Storage::Transaction* transaction,
                                    const CryptoKernel::Blockchain::transaction& tx);
     
@@ -71,21 +75,18 @@ public:
 protected:
     CryptoKernel::Blockchain* blockchain;
     CryptoKernel::Log* log;
-    uint64_t blockTarget;
-    struct consensusData {
-        BigNum totalWork;
-        BigNum target;
-        uint64_t nonce;
-    };
+    
     consensusData getConsensusData(const CryptoKernel::Blockchain::block& block);
-    consensusData getConsensusData(const CryptoKernel::Blockchain::dbBlock& block);
     Json::Value consensusDataToJson(const consensusData& data);
-
 private:  
     bool running;
-    void miner();
-    std::string pubKey;
-    std::unique_ptr<std::thread> minerThread;
+    std::string cbPubkey;
+    struct consensusData {
+        std::string cbPubkey;
+    };
+    std::unique_ptr<std::thread> cbThread;
 };
+
+}
 
 #endif // CB_H_INCLUDED
