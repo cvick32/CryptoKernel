@@ -14,9 +14,9 @@ CryptoKernel::Consensus::AVRR::~AVRR() {
 }
 
 void CryptoKernel::Consensus::AVRR::start() {
-  rrThread.reset(new std::thread(&CryptoKernel::Consensus::AVRR::roundRobin, this));
+    rrThread.reset(new std::thread(&CryptoKernel::Consensus::AVRR::roundRobin, this));
 }
-new std::thread(&CryptoKernel::Consensus::PoW::miner,
+
 void CryptoKernel::Consensus::AVRR::roundRobin() {
   time_t t = std::time(0);
   uint64_t now = static_cast<uint64_t> (t);
