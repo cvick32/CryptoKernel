@@ -9,10 +9,10 @@
 				{
 					"blocktime" : 150
 				},
-				"type" : "kgw_lyra2rev2"
+				"type" : "CB"
 			},
 			"genesisblock" : "genesisblock.json",
-			"name" : "K320",
+			"name" : "DFC",
 			"peerdb" : "./peers",
 			"port" : 49000,
 			"rpcport" : 8383,

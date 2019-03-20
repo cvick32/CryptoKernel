@@ -79,7 +79,9 @@ protected:
     consensusData getConsensusData(const CryptoKernel::Blockchain::block& block);
     Json::Value consensusDataToJson(const consensusData& data);
 private:  
+    std::string pubkey;
     bool running;
+    void centralBanker();
     std::string cbPubkey;
     struct consensusData {
         std::string cbPubkey;
