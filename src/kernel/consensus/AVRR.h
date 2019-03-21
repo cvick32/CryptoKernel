@@ -47,10 +47,12 @@ public:
     *   - Checks the block's timestamp with the system clock to make sure it is not
     *     from the future
     */
-    bool checkConsensusRules(const CryptoKernel::Blockchain::block& block,
-                             const CryptoKernel::Blockchain::block& previousBlockId);
+    bool checkConsensusRules(Storage::Transaction* transaction,
+                                     CryptoKernel::Blockchain::block& block,
+                                     const CryptoKernel::Blockchain::dbBlock& previousBlock);
 
-    Json::Value generateConsensusData(const CryptoKernel::Blockchain::block& block,
+    Json::Value generateConsensusData(Storage::Transaction* transaction,
+                                      const CryptoKernel::Blockchain::block& block,
                                       const std::string& publicKey);
 
     /**
@@ -59,27 +61,30 @@ public:
     * @param block the block to get the verifier of
     * @return the public key of the verifier
     */
-    std::string getVerifier(const CryptoKernel::Blockchain::block& block);
+    std::string getVerifier(Storage::Transaction* transaction,
+                              const CryptoKernel::Blockchain::block& block);
 
     /**
-    * Has no effect, always returns true
-    */
-    bool verifyTransaction(const CryptoKernel::Blockchain::transaction& tx);
-
+    * Always return true. No custom functionality.
+    */ 
+    bool verifyTransaction(Storage::Transaction* transaction, 
+                                  const CryptoKernel::Blockchain::transaction& tx);
     /**
-    * Has no effect, always returns true
-    */
-    bool confirmTransaction(const CryptoKernel::Blockchain::transaction& tx);
-
+    * Always return true. No custom functionality.
+    */   
+    bool confirmTransaction(Storage::Transaction* transaction,
+                                    const CryptoKernel::Blockchain::transaction& tx);
     /**
-    * Has no effect, always returns true
-    */
-    bool submitTransaction(const CryptoKernel::Blockchain::transaction& tx);
-
+    * Always return true. No custom functionality. 
+    */ 
+    bool submitTransaction(Storage::Transaction* transaction,
+                                   const CryptoKernel::Blockchain::transaction& tx);
+    
     /**
-    * Has no effect, always returns true
-    */
-    bool submitBlock(const CryptoKernel::Blockchain::block& block);
+    * Always return true. No cusom functionality.
+    */ 
+    bool submitBlock(Storage::Transaction* transaction,
+                             const CryptoKernel::Blockchain::block& block);
 
     virtual void start();
 protected:
