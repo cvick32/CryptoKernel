@@ -4,7 +4,7 @@
 #include "CB.h"
 #include "../crypto.h"
 
-CryptoKernel::Consensus::CB(CryptoKernel::Blockchain* blockchain,
+CryptoKernel::Consensus::CB::CB(CryptoKernel::Blockchain* blockchain,
                                   const std::string& pubkey,
                                   CryptoKernel::Log* log) {
     this->blockchain = blockchain;
