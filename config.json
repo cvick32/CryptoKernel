@@ -16,7 +16,7 @@
 			"peerdb" : "./peers",
 			"port" : 49000,
 			"rpcport" : 8383,
-			"subsidy" : "k320",
+			"subsidy" : "CB",
 			"walletdb" : "./addressesdb"
 		}
 	],

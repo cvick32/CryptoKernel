@@ -25,12 +25,19 @@ void CryptoKernel::Consensus::CB::start() {
 
 void CryptoKernel::Consensus::CB::centralBanker() {
   while(running) {
-    CryptoKernel::Blockchain::block Block = blockchain->generateVerifyingBlock(pubkey);
-    const auto res = blockchain->submitBlock(Block);
-    if(!std::get<0>(res)) {
-      log->printf(LOG_LEVEL_WARN, "Consensus::CB::centralBanker(): mined block was rejected by blockchain");
+    std::set<CryptoKernel::Blockchain::transaction> uctxs = blockchain->getUnconfirmedTransactions();
+    log->printf(LOG_LEVEL_INFO, "Consensus::CB::centralBanker(): looking for unconfirmed transactions");
+    if (!uctxs.empty()) {
+      CryptoKernel::Blockchain::block Block = blockchain->generateVerifyingBlock(pubkey);
+      const auto res = blockchain->submitBlock(Block);
+      if(!std::get<0>(res)) {
+        log->printf(LOG_LEVEL_WARN, "Consensus::CB::centralBanker(): minted block was rejected by blockchain");
+      } else {
+        log->printf(LOG_LEVEL_INFO, "Consensus::CB::centralBanker(): minted a block! Submitting to blockchain");
+      }
     } else {
-      log->printf(LOG_LEVEL_INFO, "Consensus::PoW::miner(): found a block! Submitting to blockchain");
+      log->printf(LOG_LEVEL_INFO, "Consensus::CB::centralBanker(): no unconfirmed transactions");
+      std::this_thread::sleep_for(std::chrono::seconds(5)); // don't look for 5 seconds    
     }
   }
 }
@@ -77,6 +84,7 @@ Json::Value CryptoKernel::Consensus::CB::consensusDataToJson(const
 bool CryptoKernel::Consensus::CB::checkConsensusRules(Storage::Transaction* transaction,
         CryptoKernel::Blockchain::block& block,
         const CryptoKernel::Blockchain::dbBlock& previousBlock) {
+    // did the central bank sign this block?
     return true;
 }
 
@@ -106,5 +114,6 @@ bool CryptoKernel::Consensus::CB::submitTransaction(
 
 bool CryptoKernel::Consensus::CB::submitBlock(Storage::Transaction*
         transaction, const CryptoKernel::Blockchain::block& block) {
+    // if we are the central bank, sign this block
     return true;
 }
