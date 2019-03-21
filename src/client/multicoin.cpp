@@ -123,7 +123,7 @@ std::unique_ptr<CryptoKernel::Consensus> CryptoKernel::MulticoinLoader::getConse
         verifiers.insert(pubkey);
       }
       return std::unique_ptr<CryptoKernel::Consensus>(
-        new Consensus::AVRR(verifiers, params["blocktime"].asUInt64())
+        new Consensus::AVRR(verifiers, params["blocktime"].asUInt64(), log)
       );
     }  else {
         throw std::runtime_error("Unknown consensus algorithm " + name);
