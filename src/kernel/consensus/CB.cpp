@@ -29,6 +29,8 @@ void CryptoKernel::Consensus::CB::centralBanker() {
     const auto res = blockchain->submitBlock(Block);
     if(!std::get<0>(res)) {
       log->printf(LOG_LEVEL_WARN, "Consensus::CB::centralBanker(): mined block was rejected by blockchain");
+    } else {
+      log->printf(LOG_LEVEL_INFO, "Consensus::PoW::miner(): found a block! Submitting to blockchain");
     }
   }
 }
