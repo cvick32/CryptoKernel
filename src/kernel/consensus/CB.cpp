@@ -8,10 +8,10 @@ CryptoKernel::Consensus::CB::CB(CryptoKernel::Blockchain* blockchain,
                                   const std::string& pubkey,
                                   CryptoKernel::Log* log) {
     this->blockchain = blockchain;
-    running = miner;
+    running = true;
     this->pubkey = pubkey;
     this->log = log;
-    this->cbPubkey
+    this->cbPubkey = pubkey;
 }
 
 CryptoKernel::Consensus::CB::~CB() {
@@ -28,7 +28,7 @@ void CryptoKernel::Consensus::CB::centralBanker() {
     CryptoKernel::Blockchain::block Block = blockchain->generateVerifyingBlock(pubkey);
     const auto res = blockchain->submitBlock(Block);
     if(!std::get<0>(res)) {
-      log->printf(LOG_LEVEL_WARN, "Consensus::PoW::miner(): mined block was rejected by blockchain");
+      log->printf(LOG_LEVEL_WARN, "Consensus::CB::centralBanker(): mined block was rejected by blockchain");
     }
   }
 }
