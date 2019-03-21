@@ -62,24 +62,24 @@ public:
     /**
     * Has no effect, always returns true
     */
-    bool verifyTransaction(const CryptoKernel::Blockchain::transaction& tx);
+    virtual bool verifyTransaction(const CryptoKernel::Blockchain::transaction& tx);
 
     /**
     * Has no effect, always returns true
     */
-    bool confirmTransaction(const CryptoKernel::Blockchain::transaction& tx);
+    virtual bool confirmTransaction(const CryptoKernel::Blockchain::transaction& tx);
 
     /**
     * Has no effect, always returns true
     */
-    bool submitTransaction(const CryptoKernel::Blockchain::transaction& tx);
+    virtual bool submitTransaction(const CryptoKernel::Blockchain::transaction& tx);
 
     /**
     * Has no effect, always returns true
     */
-    bool submitBlock(const CryptoKernel::Blockchain::block& block);
+    virtual bool submitBlock(const CryptoKernel::Blockchain::block& block);
 
-    void start();
+    virtual void start();
 private:
     std::set<std::string> verifiers;
     uint64_t blockTarget;
