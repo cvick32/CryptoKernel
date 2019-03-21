@@ -99,6 +99,7 @@ private:
     };
     void roundRobin();
     consensusData getConsensusData(const CryptoKernel::Blockchain::block& block);
+    consensusData getConsensusData(const CryptoKernel::Blockchain::dbBlock& block);
     Json::Value consensusDataToJson(const consensusData& data);
     std::unique_ptr<std::thread> rrThread;
 };
