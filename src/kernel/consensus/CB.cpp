@@ -25,8 +25,6 @@ void CryptoKernel::Consensus::CB::start() {
 
 void CryptoKernel::Consensus::CB::centralBanker() {
   while(running) {
-    CryptoKernel::Blockchain::block Block = blockchain->generateVerifyingBlock(pubkey);
-    const auto res = blockchain->submitBlock(Block);
     std::set<CryptoKernel::Blockchain::transaction> uctxs = blockchain->getUnconfirmedTransactions();
     log->printf(LOG_LEVEL_INFO, "Consensus::CB::centralBanker(): looking for unconfirmed transactions");
     if (!uctxs.empty()) {
