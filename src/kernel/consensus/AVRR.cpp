@@ -31,7 +31,6 @@ void CryptoKernel::Consensus::AVRR::roundRobin() {
     // if it is, build a block and sign it
     
   }
-
 }
 
 bool CryptoKernel::Consensus::AVRR::isBlockBetter(const CryptoKernel::Blockchain::dbBlock&
@@ -77,7 +76,9 @@ bool CryptoKernel::Consensus::AVRR::checkConsensusRules(const
 }
 
 Json::Value CryptoKernel::Consensus::AVRR::generateConsensusData(
-    const CryptoKernel::Blockchain::block& block, const std::string& publicKey) {
+    Storage::Transaction* transaction,
+    const CryptoKernel::Blockchain::block& block, 
+    const std::string& publicKey) {
     consensusData data;
     data.publicKey = publicKey;
     data.sequenceNumber = block.getTimestamp() / blockTarget;
@@ -113,22 +114,26 @@ Json::Value CryptoKernel::Consensus::AVRR::consensusDataToJson(
     return returning;
 }
 
-bool CryptoKernel::Consensus::AVRR::verifyTransaction(const
-        CryptoKernel::Blockchain::transaction& tx) {
+bool CryptoKernel::Consensus::AVRR::verifyTransaction(
+  Storage::Transaction* transaction, 
+  const CryptoKernel::Blockchain::transaction& tx) {
     return true;
 }
 
-bool CryptoKernel::Consensus::AVRR::confirmTransaction(const
-        CryptoKernel::Blockchain::transaction& tx) {
+bool CryptoKernel::Consensus::AVRR::confirmTransaction(
+  Storage::Transaction* transaction,
+  const CryptoKernel::Blockchain::transaction& tx) {
     return true;
 }
 
-bool CryptoKernel::Consensus::AVRR::submitTransaction(const
-        CryptoKernel::Blockchain::transaction& tx) {
+bool CryptoKernel::Consensus::AVRR::submitTransaction(
+  Storage::Transaction* transaction, 
+  const CryptoKernel::Blockchain::transaction& tx) {
     return true;
 }
 
-bool CryptoKernel::Consensus::AVRR::submitBlock(const CryptoKernel::Blockchain::block&
-        block) {
+bool CryptoKernel::Consensus::AVRR::submitBlock(
+  Storage::Transaction* transaction, 
+  const CryptoKernel::Blockchain::block& block) {
     return true;
 }
