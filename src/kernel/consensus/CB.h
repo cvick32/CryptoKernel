@@ -75,6 +75,10 @@ public:
 protected:
     CryptoKernel::Blockchain* blockchain;
     CryptoKernel::Log* log;
+    struct consensusData {
+        std::string signature;
+        std::string publicKey;
+    };
     
     consensusData getConsensusData(const CryptoKernel::Blockchain::block& block);
     Json::Value consensusDataToJson(const consensusData& data);
@@ -83,9 +87,6 @@ private:
     bool running;
     void centralBanker();
     std::string cbPubkey;
-    struct consensusData {
-        std::string cbPubkey;
-    };
     std::unique_ptr<std::thread> cbThread;
 };
 

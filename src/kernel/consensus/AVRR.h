@@ -81,7 +81,7 @@ public:
 
     void start();
 
-    void roundRobin();
+    
 private:
     std::set<std::string> verifiers;
     uint64_t blockTarget;
@@ -91,6 +91,7 @@ private:
         std::string signature;
         std::string publicKey;
     };
+    void roundRobin();
     consensusData getConsensusData(const CryptoKernel::Blockchain::block& block);
     Json::Value consensusDataToJson(const consensusData& data);
     std::unique_ptr<std::thread> rrThread;
