@@ -48,7 +48,7 @@ std::string CryptoKernel::Consensus::AVRR::serializeConsensusData(
 
 bool CryptoKernel::Consensus::AVRR::checkConsensusRules(Storage::Transaction* transaction,
         const CryptoKernel::Blockchain::block& block,
-        const CryptoKernel::Blockchain::block& previousBlock) {
+        const CryptoKernel::Blockchain::dbBlock& previousBlock) {
     const consensusData blockData = getConsensusData(block);
     const consensusData previousBlockData = getConsensusData(previousBlock);
     if(blockData.sequenceNumber <= previousBlockData.sequenceNumber ||
