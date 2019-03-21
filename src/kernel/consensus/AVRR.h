@@ -50,7 +50,7 @@ public:
     bool checkConsensusRules(Storage::Transaction* transaction,
                                      CryptoKernel::Blockchain::block& block,
                                      const CryptoKernel::Blockchain::dbBlock& previousBlock);
-
+                                     
     Json::Value generateConsensusData(Storage::Transaction* transaction,
                                       const CryptoKernel::Blockchain::block& block,
                                       const std::string& publicKey);
@@ -61,8 +61,7 @@ public:
     * @param block the block to get the verifier of
     * @return the public key of the verifier
     */
-    std::string getVerifier(Storage::Transaction* transaction,
-                              const CryptoKernel::Blockchain::block& block);
+    virtual std::string getVerifier(const CryptoKernel::Blockchain::block& block);
 
     /**
     * Always return true. No custom functionality.

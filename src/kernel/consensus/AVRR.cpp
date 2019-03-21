@@ -86,8 +86,8 @@ Json::Value CryptoKernel::Consensus::AVRR::generateConsensusData(
     return consensusDataToJson(data);
 }
 
-std::string CryptoKernel::Consensus::AVRR::getVerifier(const
-        CryptoKernel::Blockchain::block& block) {
+std::string CryptoKernel::Consensus::AVRR::getVerifier(const 
+      CryptoKernel::Blockchain::block& block) {
     const consensusData blockData = getConsensusData(block);
     const uint64_t verifierId = blockData.sequenceNumber % verifiers.size();
 
