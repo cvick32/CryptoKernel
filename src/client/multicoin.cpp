@@ -1,6 +1,8 @@
 #include "multicoin.h"
 
 #include "consensus/PoW.h"
+#include "consensus/CB.h"
+#include "consensus/AVRR.h"
 
 CryptoKernel::MulticoinLoader::MulticoinLoader(const std::string& configFile,
                                                Log* log,
