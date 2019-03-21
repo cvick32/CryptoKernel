@@ -34,7 +34,8 @@ public:
     * verifier's block in the round-robin always takes precedence but that verifiers
     * who miss their block submission slot cannot retroactively submit a block.
     */
-    bool isBlockBetter(const CryptoKernel::Blockchain::dbBlock& block,
+    bool isBlockBetter(Storage::Transaction* transaction,
+                       const CryptoKernel::Blockchain::block& block,
                        const CryptoKernel::Blockchain::dbBlock& tip);
 
     std::string serializeConsensusData(const CryptoKernel::Blockchain::block& block);
@@ -52,7 +53,7 @@ public:
                              const CryptoKernel::Blockchain::dbBlock& previousBlock);
 
     Json::Value generateConsensusData(Storage::Transaction* transaction,
-                                      const CryptoKernel::Blockchain::block& block,
+                                      const CryptoKernel::BigNum& previousBlockId, 
                                       const std::string& publicKey);
 
     /**

@@ -33,8 +33,9 @@ void CryptoKernel::Consensus::AVRR::roundRobin() {
   }
 }
 
-bool CryptoKernel::Consensus::AVRR::isBlockBetter(const CryptoKernel::Blockchain::dbBlock&
-        block, const CryptoKernel::Blockchain::dbBlock& tip) {
+bool CryptoKernel::Consensus::AVRR::isBlockBetter(Storage::Transaction* transaction,
+        const CryptoKernel::Blockchain::dbBlock& block,
+        const CryptoKernel::Blockchain::dbBlock& tip) {
     return (block.getConsensusData()["sequenceNumber"].asUInt64() <
             tip.getConsensusData()["sequenceNumber"].asUInt64() &&
             block.getHeight() >= tip.getHeight());
@@ -77,7 +78,7 @@ bool CryptoKernel::Consensus::AVRR::checkConsensusRules(Storage::Transaction* tr
 
 Json::Value CryptoKernel::Consensus::AVRR::generateConsensusData(
     Storage::Transaction* transaction,
-    const CryptoKernel::Blockchain::block& block, 
+    const CryptoKernel::BigNum& previousBlockId, 
     const std::string& publicKey) {
     consensusData data;
     data.publicKey = publicKey;
