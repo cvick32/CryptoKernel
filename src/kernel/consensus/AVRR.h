@@ -48,9 +48,9 @@ public:
     *     from the future
     */
     bool checkConsensusRules(Storage::Transaction* transaction,
-                                     CryptoKernel::Blockchain::block& block,
-                                     const CryptoKernel::Blockchain::dbBlock& previousBlock);
-                                     
+                             CryptoKernel::Blockchain::block& block,
+                             const CryptoKernel::Blockchain::dbBlock& previousBlock);
+
     Json::Value generateConsensusData(Storage::Transaction* transaction,
                                       const CryptoKernel::Blockchain::block& block,
                                       const std::string& publicKey);

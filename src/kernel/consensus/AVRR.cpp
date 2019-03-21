@@ -46,8 +46,8 @@ std::string CryptoKernel::Consensus::AVRR::serializeConsensusData(
            block.getConsensusData()["sequenceNumber"].asString();
 }
 
-bool CryptoKernel::Consensus::AVRR::checkConsensusRules(const
-        CryptoKernel::Blockchain::block& block,
+bool CryptoKernel::Consensus::AVRR::checkConsensusRules(Storage::Transaction* transaction,
+        const CryptoKernel::Blockchain::block& block,
         const CryptoKernel::Blockchain::block& previousBlock) {
     const consensusData blockData = getConsensusData(block);
     const consensusData previousBlockData = getConsensusData(previousBlock);
