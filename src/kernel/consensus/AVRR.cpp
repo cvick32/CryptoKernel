@@ -3,10 +3,12 @@
 
 
 CryptoKernel::Consensus::AVRR::AVRR(const std::set<std::string>& verifiers,
-                                    const uint64_t blockTarget) {
+                                    const uint64_t blockTarget,
+                                    CryptoKernel::Log* log) {
     this->verifiers = verifiers;
     this->blockTarget = blockTarget;
     running = true;
+    this->log = log;
 }
 
 CryptoKernel::Consensus::AVRR::~AVRR() {

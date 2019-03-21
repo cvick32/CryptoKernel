@@ -82,6 +82,8 @@ public:
     bool submitBlock(const CryptoKernel::Blockchain::block& block);
 
     virtual void start();
+protected:
+  CryptoKernel::Log* log;
 private:
     std::set<std::string> verifiers;
     uint64_t blockTarget;
