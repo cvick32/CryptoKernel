@@ -15,7 +15,7 @@
 			"name" : "DFC",
 			"peerdb" : "./peers",
 			"port" : 49000,
-			"rpcport" : 8383,
+			"rpcport" : 8380,
 			"subsidy" : "CB",
 			"walletdb" : "./addressesdb"
 		}
