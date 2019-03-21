@@ -80,8 +80,6 @@ public:
     bool submitBlock(const CryptoKernel::Blockchain::block& block);
 
     void start();
-
-    
 private:
     std::set<std::string> verifiers;
     uint64_t blockTarget;

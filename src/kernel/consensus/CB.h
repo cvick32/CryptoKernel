@@ -81,6 +81,7 @@ protected:
     };
     
     consensusData getConsensusData(const CryptoKernel::Blockchain::block& block);
+    consensusData getConsensusData(const CryptoKernel::Blockchain::dbBlock& block);
     Json::Value consensusDataToJson(const consensusData& data);
 private:  
     std::string pubkey;

@@ -14,7 +14,7 @@ CryptoKernel::Consensus::CB(CryptoKernel::Blockchain* blockchain,
     this->cbPubkey
 }
 
-CryptoKernel::Consensus::~CB() {
+CryptoKernel::Consensus::CB::~CB() {
     running = false;
     cbThread->join();
 }
@@ -25,7 +25,7 @@ void CryptoKernel::Consensus::CB::start() {
 
 void CryptoKernel::Consensus::CB::centralBanker() {
   while(running) {
-    CryptoKernel::Blockchain::block Block = blockchain->generateVerifyingBlock(pubKey);
+    CryptoKernel::Blockchain::block Block = blockchain->generateVerifyingBlock(pubkey);
     const auto res = blockchain->submitBlock(Block);
     if(!std::get<0>(res)) {
       log->printf(LOG_LEVEL_WARN, "Consensus::PoW::miner(): mined block was rejected by blockchain");
@@ -41,14 +41,24 @@ bool CryptoKernel::Consensus::CB::isBlockBetter(Storage::Transaction* transactio
     const consensusData tipData = getConsensusData(tip);
     CryptoKernel::Crypto crypto;
     crypto.setPublicKey(cbPubkey);
-    return blockData.totalWork > tipData.totalWork && crypto.verify(block.getId().toString(), blockData.signature);
+    return crypto.verify(block.getId().toString(), blockData.signature);
 }
 
 CryptoKernel::Consensus::CB::consensusData
 CryptoKernel::Consensus::CB::getConsensusData(const CryptoKernel::Blockchain::block&
         block) {
     consensusData returning;
-    const JSON::Value data = block.getConsensusData();
+    const Json::Value data = block.getConsensusData();
+    returning.publicKey = data["publicKey"].asString();
+    returning.signature = data["signature"].asString();
+    return returning;
+}
+
+CryptoKernel::Consensus::CB::consensusData
+CryptoKernel::Consensus::CB::getConsensusData(const CryptoKernel::Blockchain::dbBlock&
+        block) {
+    consensusData returning;
+    const Json::Value data = block.getConsensusData();
     returning.publicKey = data["publicKey"].asString();
     returning.signature = data["signature"].asString();
     return returning;
@@ -73,7 +83,7 @@ Json::Value CryptoKernel::Consensus::CB::generateConsensusData(
     const std::string& publicKey) {
     consensusData data;
     data.publicKey = publicKey;
-    data.sequenceNumber = block.getTimestamp() / blockTarget;
+    data.signature = '';
 
     return consensusDataToJson(data);
 }
