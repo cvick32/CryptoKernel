@@ -65,7 +65,7 @@ CryptoKernel::Consensus::CB::getConsensusData(const CryptoKernel::Blockchain::db
 }
 
 Json::Value CryptoKernel::Consensus::CB::consensusDataToJson(const
-        CryptoKernel::Consensus:CB::consensusData& data) {
+        CryptoKernel::Consensus::CB::consensusData& data) {
     Json::Value returning;
     returning["publicKey"] = data.publicKey;
     returning["signature"] = data.signature;
@@ -83,7 +83,6 @@ Json::Value CryptoKernel::Consensus::CB::generateConsensusData(
     const std::string& publicKey) {
     consensusData data;
     data.publicKey = publicKey;
-    data.signature = '';
 
     return consensusDataToJson(data);
 }
