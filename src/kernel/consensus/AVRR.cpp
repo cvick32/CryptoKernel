@@ -1,5 +1,6 @@
-#include "../crypto.h"
 #include "AVRR.h"
+#include "../crypto.h"
+
 
 CryptoKernel::Consensus::AVRR::AVRR(const std::set<std::string>& verifiers,
                                     const uint64_t blockTarget) {

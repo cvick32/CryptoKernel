@@ -2,7 +2,6 @@
 #define CB_H_INCLUDED
 
 #include <thread>
-
 #include "../blockchain.h"
 
 namespace CryptoKernel {
@@ -52,23 +51,23 @@ public:
     /**
     * Always return true. No custom functionality.
     */ 
-    virtual bool verifyTransaction(Storage::Transaction* transaction, 
+    bool verifyTransaction(Storage::Transaction* transaction, 
                                   const CryptoKernel::Blockchain::transaction& tx);
     /**
     * Always return true. No custom functionality.
     */   
-    virtual bool confirmTransaction(Storage::Transaction* transaction,
+    bool confirmTransaction(Storage::Transaction* transaction,
                                     const CryptoKernel::Blockchain::transaction& tx);
     /**
     * Always return true. No custom functionality. 
     */ 
-    virtual bool submitTransaction(Storage::Transaction* transaction,
+    bool submitTransaction(Storage::Transaction* transaction,
                                    const CryptoKernel::Blockchain::transaction& tx);
     
     /**
     * - have the Central Bank sign this block with its private key
     */ 
-    virtual bool submitBlock(Storage::Transaction* transaction,
+    bool submitBlock(Storage::Transaction* transaction,
                              const CryptoKernel::Blockchain::block& block);
 
     virtual void start();
@@ -79,7 +78,6 @@ protected:
         std::string signature;
         std::string publicKey;
     };
-    
     consensusData getConsensusData(const CryptoKernel::Blockchain::block& block);
     consensusData getConsensusData(const CryptoKernel::Blockchain::dbBlock& block);
     Json::Value consensusDataToJson(const consensusData& data);

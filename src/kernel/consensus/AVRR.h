@@ -22,7 +22,9 @@ public:
     * @param verifiers the set of verifier public keys
     * @param blockTarget the number of seconds between each block
     */
-    AVRR(const std::set<std::string>& verifiers, const uint64_t blockTarget);
+    AVRR(const std::set<std::string>& verifiers, 
+          const uint64_t blockTarget,
+          CryptoKernel::Log* log);
 
     virtual ~AVRR();
 
@@ -62,22 +64,22 @@ public:
     /**
     * Has no effect, always returns true
     */
-    virtual bool verifyTransaction(const CryptoKernel::Blockchain::transaction& tx);
+    bool verifyTransaction(const CryptoKernel::Blockchain::transaction& tx);
 
     /**
     * Has no effect, always returns true
     */
-    virtual bool confirmTransaction(const CryptoKernel::Blockchain::transaction& tx);
+    bool confirmTransaction(const CryptoKernel::Blockchain::transaction& tx);
 
     /**
     * Has no effect, always returns true
     */
-    virtual bool submitTransaction(const CryptoKernel::Blockchain::transaction& tx);
+    bool submitTransaction(const CryptoKernel::Blockchain::transaction& tx);
 
     /**
     * Has no effect, always returns true
     */
-    virtual bool submitBlock(const CryptoKernel::Blockchain::block& block);
+    bool submitBlock(const CryptoKernel::Blockchain::block& block);
 
     virtual void start();
 private:
