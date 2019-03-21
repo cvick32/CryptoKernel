@@ -105,6 +105,17 @@ CryptoKernel::Consensus::AVRR::getConsensusData(const CryptoKernel::Blockchain::
     return returning;
 }
 
+CryptoKernel::Consensus::AVRR::consensusData
+CryptoKernel::Consensus::AVRR::getConsensusData(const CryptoKernel::Blockchain::dbBlock&
+        block) {
+    consensusData returning;
+    const Json::Value data = block.getConsensusData();
+    returning.publicKey = data["publicKey"].asString();
+    returning.signature = data["signature"].asString();
+    returning.sequenceNumber = data["sequenceNumber"].asUInt64();
+    return returning;
+}
+
 Json::Value CryptoKernel::Consensus::AVRR::consensusDataToJson(
     const consensusData& data) {
     Json::Value returning;
