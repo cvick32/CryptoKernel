@@ -32,11 +32,19 @@ CryptoKernel::MulticoinLoader::MulticoinLoader(const std::string& configFile,
                                                         coin["blockdb"].asString(),
                                                         coinbaseOwnerFunc,
                                                         subsidyFunc));
+        
+        if(!coin["walletdb"].empty()) {
+            newCoin->wallet.reset(new Wallet(newCoin->blockchain.get(),
+                                            newCoin->network.get(),
+                                            log,
+                                            coin["walletdb"].asString()));
+        }
 
         newCoin->consensusAlgo = getConsensusAlgo(coin["consensus"]["type"].asString(),
                                                   coin["consensus"]["params"],
                                                   config,
-                                                  newCoin->blockchain.get());
+                                                  newCoin->blockchain.get(),
+                                                  newCoin->wallet.get());
 
         newCoin->blockchain->loadChain(newCoin->consensusAlgo.get(),
                                       coin["genesisblock"].asString());
@@ -46,13 +54,6 @@ CryptoKernel::MulticoinLoader::MulticoinLoader(const std::string& configFile,
         newCoin->network.reset(new Network(log, newCoin->blockchain.get(),
                                            coin["port"].asUInt(),
                                            coin["peerdb"].asString()));
-
-        if(!coin["walletdb"].empty()) {
-            newCoin->wallet.reset(new Wallet(newCoin->blockchain.get(),
-                                            newCoin->network.get(),
-                                            log,
-                                            coin["walletdb"].asString()));
-        }
 
         newCoin->httpserver.reset(new jsonrpc::HttpServerLocal(coin["rpcport"].asUInt(),
                                   config["rpcuser"].asString(),
@@ -110,7 +111,8 @@ std::unique_ptr<CryptoKernel::Consensus> CryptoKernel::MulticoinLoader::getConse
                                          const std::string& name,
                                          const Json::Value& params,
                                          const Json::Value& config,
-                                         Blockchain* blockchain) {
+                                         Blockchain* blockchain,
+                                         Wallet* wallet) {
     if(name == "kgw_lyra2rev2") {
         return std::unique_ptr<CryptoKernel::Consensus>(
                new Consensus::PoW::KGW_LYRA2REV2(params["blocktime"].asUInt64(),
@@ -120,7 +122,7 @@ std::unique_ptr<CryptoKernel::Consensus> CryptoKernel::MulticoinLoader::getConse
                                                  log));
     } else if (name == "CB") {
       return std::unique_ptr<CryptoKernel::Consensus>(
-        new Consensus::CB(blockchain, config["pubKey"].asString(), log));
+        new Consensus::CB(blockchain, config["pubKey"].asString(), wallet, log));
     } else if (name == "AVRR") {
       std::set<std::string> verifiers;
       for (const auto& verifier : config["verifiers"]) {

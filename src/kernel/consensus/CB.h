@@ -24,6 +24,7 @@ public:
     */
     CB(CryptoKernel::Blockchain* blockchain,
         const std::string& pubKey,
+        CryptoKernel::Wallet* wallet,
         CryptoKernel::Log* log);
 
     virtual ~CB();
@@ -79,15 +80,21 @@ protected:
         std::string signature;
         std::string publicKey;
     };
+    
     consensusData getConsensusData(const CryptoKernel::Blockchain::block& block);
     consensusData getConsensusData(const CryptoKernel::Blockchain::dbBlock& block);
     Json::Value consensusDataToJson(const consensusData& data);
 private:  
-    std::string pubKey;
-    bool running;
+    // the 'minter' 
     void centralBanker();
+    // check if this is the central bank or not
+    void checkCB()''
+
+    bool running;
+    std::string pubKey;
     std::string cbPubKey;
     std::unique_ptr<std::thread> cbThread;
+    CryptoKernel::Wallet wallet;
 };
 
 }
