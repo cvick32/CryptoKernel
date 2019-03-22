@@ -65,8 +65,8 @@ CryptoKernel::MulticoinLoader::MulticoinLoader(const std::string& configFile,
                                       newCoin->network.get(), running);
         newCoin->rpcserver->StartListening();
 
-        if (coin["consensus"]["type"].asString() == "CB") {
-          newCoin->consensusAlgo->setWallet(newCoin->wallet.get());
+        if (CryptoKernel::Consensus::CB* cb = dynamic_cast<Child*>(newCoin->consensusAlgo.get())) {
+          cb->setWallet(newCoin->wallet.get());
         }
 
         coins.push_back(std::unique_ptr<Coin>(newCoin));
