@@ -138,4 +138,5 @@ bool CryptoKernel::Consensus::CB::submitBlock(Storage::Transaction*
       CryptoKernel::Crypto crypto;
       return true;
     }
+  return true;
 }
