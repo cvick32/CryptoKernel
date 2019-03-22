@@ -72,6 +72,9 @@ public:
                              const CryptoKernel::Blockchain::block& block);
 
     virtual void start();
+
+    // set wallet for CB
+    virtual void setWallet(CryptoKernel::Wallet* Wallet);
 protected:
     CryptoKernel::Blockchain* blockchain;
     CryptoKernel::Log* log;
@@ -88,8 +91,6 @@ private:
     void centralBanker();
     // check if this is the central bank or not
     void checkCB();
-    // set wallet for CB
-    void setWallet(CryptoKernel::Wallet* Wallet);
 
     bool running;
     std::string pubKey;
