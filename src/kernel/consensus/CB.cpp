@@ -11,13 +11,11 @@ CryptoKernel::Consensus::CB::CB(CryptoKernel::Blockchain* blockchain,
     running = true;
     this->pubKey = pubKey;
     this->log = log;
-    
-    checkCB();
 }
 
 CryptoKernel::Consensus::CB::~CB() {
-    running = false;
-    cbThread->join();
+  running = false;
+  cbThread->join();
 }
 
 void CryptoKernel::Consensus::CB::checkCB() {
@@ -29,13 +27,13 @@ void CryptoKernel::Consensus::CB::setWallet(CryptoKernel::Wallet* Wallet) {
 }
 
 void CryptoKernel::Consensus::CB::start() {
-    cbThread.reset(new std::thread(&CryptoKernel::Consensus::CB::centralBanker, this));
+  cbThread.reset(new std::thread(&CryptoKernel::Consensus::CB::centralBanker, this));
 }
 
 void CryptoKernel::Consensus::CB::centralBanker() {
   // get cbPubKey from genesis block
   this->cbPubKey = blockchain->getBlockByHeight(1).getConsensusData()["publicKey"].asString();
-    
+  checkCB();
   while(running) {
     log->printf(LOG_LEVEL_INFO, "Consensus::CB::centralBanker(): looking for unconfirmed transactions");
     std::set<CryptoKernel::Blockchain::transaction> uctxs = blockchain->getUnconfirmedTransactions();
