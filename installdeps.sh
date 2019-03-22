@@ -31,7 +31,7 @@ make
 sudo make install
 
 cd ../
-wget https://github.com/open-source-parsers/jsoncpp/archive/1.8.4.tar.gz
+wget https://github.com/open-source-parsers/jsoncpp/archive/1.8.4.tar.gz --no-check-certificate
 tar -xzvf 1.8.4.tar.gz
 cd jsoncpp*
 cmake .
@@ -39,7 +39,7 @@ make
 sudo make install
 
 cd ../
-wget https://github.com/cinemast/libjson-rpc-cpp/archive/v1.1.0.tar.gz
+wget https://github.com/cinemast/libjson-rpc-cpp/archive/v1.1.0.tar.gz --no-check-certificate
 tar -xvzf v1.1.0.tar.gz
 cd libjson-rpc-cpp*
 cmake . -DBUILD_SHARED_LIBS=NO -DBUILD_STATIC_LIBS=YES -DCOMPILE_TESTS=NO -DCOMPILE_STUBGEN=NO -DCOMPILE_EXAMPLES=NO
@@ -56,7 +56,7 @@ make
 sudo cp lz4.so /usr/lib
 
 cd ../
-wget https://github.com/premake/premake-core/releases/download/v5.0.0-alpha12/premake-5.0.0-alpha12-linux.tar.gz && \
+wget https://github.com/premake/premake-core/releases/download/v5.0.0-alpha12/premake-5.0.0-alpha12-linux.tar.gz --no-check-certificate && \
 tar zxvf premake-5.0.0-alpha12-linux.tar.gz && \
 sudo cp premake5 /usr/bin
 
