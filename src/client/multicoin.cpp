@@ -115,8 +115,7 @@ std::unique_ptr<CryptoKernel::Consensus> CryptoKernel::MulticoinLoader::getConse
                                          const std::string& name,
                                          const Json::Value& params,
                                          const Json::Value& config,
-                                         Blockchain* blockchain,
-                                         Wallet* Wallet) {
+                                         Blockchain* blockchain) {
     if(name == "kgw_lyra2rev2") {
         return std::unique_ptr<CryptoKernel::Consensus>(
                new Consensus::PoW::KGW_LYRA2REV2(params["blocktime"].asUInt64(),
