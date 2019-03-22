@@ -3,15 +3,16 @@
 
 #include "CB.h"
 #include "../crypto.h"
+#include "../../client/wallet.h"
 
 CryptoKernel::Consensus::CB::CB(CryptoKernel::Blockchain* blockchain,
-                                  const std::string& pubkey,
+                                  const std::string& pubKey,
                                   CryptoKernel::Log* log) {
     this->blockchain = blockchain;
     running = true;
-    this->pubkey = pubkey;
+    this->pubKey = pubKey;
     this->log = log;
-    this->cbPubkey = pubkey;
+    this->cbPubKey = pubKey;
 }
 
 CryptoKernel::Consensus::CB::~CB() {
@@ -25,11 +26,26 @@ void CryptoKernel::Consensus::CB::start() {
 
 void CryptoKernel::Consensus::CB::centralBanker() {
   while(running) {
-    std::set<CryptoKernel::Blockchain::transaction> uctxs = blockchain->getUnconfirmedTransactions();
     log->printf(LOG_LEVEL_INFO, "Consensus::CB::centralBanker(): looking for unconfirmed transactions");
+    std::set<CryptoKernel::Blockchain::transaction> uctxs = blockchain->getUnconfirmedTransactions();
+
     if (!uctxs.empty()) {
-      CryptoKernel::Blockchain::block Block = blockchain->generateVerifyingBlock(pubkey);
+      std::string password = "froogy45";
+
+      // sign the block with our pubkey
+      CryptoKernel::Blockchain::block Block = blockchain->generateVerifyingBlock(pubKey);
+      std::string blockId = Block.getId().toString();
+      std::string signature = signMessage(blockId, pubKey, password);
+      
+      // create consensus data
+      Json::Value consensusData = Block.getConsensusData(); 
+      consensusData["signature"] = signature;
+      consensusData["publicKey"] = pubKey;
+
+      log->printf(LOG_LEVEL_WARN, "Consensus::CB::centralBanker(): consensus data  = " + consensusData.asString());
+
       const auto res = blockchain->submitBlock(Block);
+      
       if(!std::get<0>(res)) {
         log->printf(LOG_LEVEL_WARN, "Consensus::CB::centralBanker(): minted block was rejected by blockchain");
       } else {
@@ -49,7 +65,7 @@ bool CryptoKernel::Consensus::CB::isBlockBetter(Storage::Transaction* transactio
     const consensusData blockData = getConsensusData(block);
     const consensusData tipData = getConsensusData(tip);
     CryptoKernel::Crypto crypto;
-    crypto.setPublicKey(cbPubkey);
+    crypto.setPublicKey(cbpubKey);
     return crypto.verify(block.getId().toString(), blockData.signature);
 }
 
@@ -114,6 +130,8 @@ bool CryptoKernel::Consensus::CB::submitTransaction(
 
 bool CryptoKernel::Consensus::CB::submitBlock(Storage::Transaction*
         transaction, const CryptoKernel::Blockchain::block& block) {
-    // if we are the central bank, sign this block
-    return true;
+    if (pubKey == cbPubKey) {
+      CryptoKernel::Crypto crypto;
+      return true;
+    }
 }

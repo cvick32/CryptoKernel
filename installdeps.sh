@@ -69,5 +69,4 @@ sudo cp src/*.h /usr/local/include/cschnorr/
 sudo cp bin/Static/Debug/libcschnorr.a /usr/local/lib
 sudo ldconfig
 sudo cp /usr/include/lua5.3/{lauxlib.h,luaconf.h,lua.hpp,lualib.h,lua.h} /usr/local/include/
-sudo cp /usr/lib/lz4.s ./
-sudo cp ./bin/Static/Debug/{ckd,test} ./
+sudo cp /usr/lib/lz4.so ./

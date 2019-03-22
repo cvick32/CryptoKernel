@@ -3,6 +3,7 @@
 
 #include <thread>
 #include "../blockchain.h"
+#include "../../client/wallet.h"
 
 namespace CryptoKernel {
 /**
@@ -82,10 +83,10 @@ protected:
     consensusData getConsensusData(const CryptoKernel::Blockchain::dbBlock& block);
     Json::Value consensusDataToJson(const consensusData& data);
 private:  
-    std::string pubkey;
+    std::string pubKey;
     bool running;
     void centralBanker();
-    std::string cbPubkey;
+    std::string cbPubKey;
     std::unique_ptr<std::thread> cbThread;
 };
 
