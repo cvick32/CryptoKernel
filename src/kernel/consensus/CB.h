@@ -88,7 +88,7 @@ private:
     // the 'minter' 
     void centralBanker();
     // check if this is the central bank or not
-    void checkCB()''
+    void checkCB();
 
     bool running;
     std::string pubKey;
