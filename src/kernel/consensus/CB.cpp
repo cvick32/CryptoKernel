@@ -6,18 +6,14 @@
 
 CryptoKernel::Consensus::CB::CB(CryptoKernel::Blockchain* blockchain,
                                   const std::string& pubKey,
-                                  CryptoKernel::Wallet* Wallet,
                                   CryptoKernel::Log* log) {
     this->blockchain = blockchain;
-    wallet = Wallet;
     running = true;
     this->pubKey = pubKey;
     this->log = log;
     // get cbPubKey from genesis block
     this->cbPubKey = blockchain->getBlockByHeight(1).getConsensusData()["publicKey"].asString();
     
-    
-
     checkCB();
 }
 
@@ -28,6 +24,10 @@ CryptoKernel::Consensus::CB::~CB() {
 
 void CryptoKernel::Consensus::CB::checkCB() {
   log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): you are the central bank!");
+}
+
+void CryptoKernel::Consensus::CB::setWallet(CryptoKernel::Wallet* Wallet) {
+  wallet = Wallet;
 }
 
 void CryptoKernel::Consensus::CB::start() {

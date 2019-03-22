@@ -7,8 +7,8 @@
 
 namespace CryptoKernel {
 /**
-* Implements a Central Bank consensus algorithm. The Central Bank will verify
-* all transactions and publish blocks.
+* Implements a Central Bank consensus algorithm. The Central Bank will publish blocks
+*  when there are unconfirmed transactions. 
 */
 class Consensus::CB : public Consensus {
 public:
@@ -24,7 +24,6 @@ public:
     */
     CB(CryptoKernel::Blockchain* blockchain,
         const std::string& pubKey,
-        CryptoKernel::Wallet* Wallet,
         CryptoKernel::Log* log);
 
     virtual ~CB();
@@ -89,6 +88,8 @@ private:
     void centralBanker();
     // check if this is the central bank or not
     void checkCB();
+    // set wallet for CB
+    void setWallet(CryptoKernel::Wallet* Wallet);
 
     bool running;
     std::string pubKey;

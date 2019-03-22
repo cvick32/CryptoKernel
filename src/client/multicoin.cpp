@@ -32,19 +32,11 @@ CryptoKernel::MulticoinLoader::MulticoinLoader(const std::string& configFile,
                                                         coin["blockdb"].asString(),
                                                         coinbaseOwnerFunc,
                                                         subsidyFunc));
-        
-        if(!coin["walletdb"].empty()) {
-            newCoin->wallet.reset(new Wallet(newCoin->blockchain.get(),
-                                            newCoin->network.get(),
-                                            log,
-                                            coin["walletdb"].asString()));
-        }
 
         newCoin->consensusAlgo = getConsensusAlgo(coin["consensus"]["type"].asString(),
                                                   coin["consensus"]["params"],
                                                   config,
-                                                  newCoin->blockchain.get(),
-                                                  newCoin->wallet.get());
+                                                  newCoin->blockchain.get());
 
         newCoin->blockchain->loadChain(newCoin->consensusAlgo.get(),
                                       coin["genesisblock"].asString());
@@ -60,10 +52,22 @@ CryptoKernel::MulticoinLoader::MulticoinLoader(const std::string& configFile,
                                   config["rpcpassword"].asString(),
                                   config["sslcert"].asString(),
                                   config["sslkey"].asString()));
+
+        if(!coin["walletdb"].empty()) {
+            newCoin->wallet.reset(new Wallet(newCoin->blockchain.get(),
+                                            newCoin->network.get(),
+                                            log,
+                                            coin["walletdb"].asString()));
+        }
+
         newCoin->rpcserver.reset(new CryptoServer(*newCoin->httpserver));
         newCoin->rpcserver->setWallet(newCoin->wallet.get(), newCoin->blockchain.get(),
                                       newCoin->network.get(), running);
         newCoin->rpcserver->StartListening();
+
+        if (coin["consensus"]["type"].asString() == "CB") {
+          newCoin->consensusAlgo->setWallet(newCoin->wallet.get());
+        }
 
         coins.push_back(std::unique_ptr<Coin>(newCoin));
     }
