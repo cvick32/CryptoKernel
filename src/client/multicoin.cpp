@@ -112,7 +112,7 @@ std::unique_ptr<CryptoKernel::Consensus> CryptoKernel::MulticoinLoader::getConse
                                          const Json::Value& params,
                                          const Json::Value& config,
                                          Blockchain* blockchain,
-                                         Wallet* wallet) {
+                                         Wallet* Wallet) {
     if(name == "kgw_lyra2rev2") {
         return std::unique_ptr<CryptoKernel::Consensus>(
                new Consensus::PoW::KGW_LYRA2REV2(params["blocktime"].asUInt64(),
@@ -122,7 +122,7 @@ std::unique_ptr<CryptoKernel::Consensus> CryptoKernel::MulticoinLoader::getConse
                                                  log));
     } else if (name == "CB") {
       return std::unique_ptr<CryptoKernel::Consensus>(
-        new Consensus::CB(blockchain, config["pubKey"].asString(), wallet, log));
+        new Consensus::CB(blockchain, config["pubKey"].asString(), Wallet, log));
     } else if (name == "AVRR") {
       std::set<std::string> verifiers;
       for (const auto& verifier : config["verifiers"]) {

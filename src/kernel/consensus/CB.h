@@ -24,7 +24,7 @@ public:
     */
     CB(CryptoKernel::Blockchain* blockchain,
         const std::string& pubKey,
-        CryptoKernel::Wallet* wallet,
+        CryptoKernel::Wallet* Wallet,
         CryptoKernel::Log* log);
 
     virtual ~CB();

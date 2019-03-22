@@ -6,16 +6,17 @@
 
 CryptoKernel::Consensus::CB::CB(CryptoKernel::Blockchain* blockchain,
                                   const std::string& pubKey,
-                                  CryptoKernel::Wallet* wallet,
+                                  CryptoKernel::Wallet* Wallet,
                                   CryptoKernel::Log* log) {
     this->blockchain = blockchain;
+    wallet = Wallet;
     running = true;
     this->pubKey = pubKey;
     this->log = log;
     // get cbPubKey from genesis block
     this->cbPubKey = blockchain->getBlockByHeight(1).getConsensusData()["publicKey"].asString();
     
-    wallet = wallet;
+    
 
     checkCB();
 }
