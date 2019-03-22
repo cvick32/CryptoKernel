@@ -125,7 +125,7 @@ std::unique_ptr<CryptoKernel::Consensus> CryptoKernel::MulticoinLoader::getConse
                                                  log));
     } else if (name == "CB") {
       return std::unique_ptr<CryptoKernel::Consensus>(
-        new Consensus::CB(blockchain, config["pubKey"].asString(), Wallet, log));
+        new Consensus::CB(blockchain, config["pubKey"].asString(), log));
     } else if (name == "AVRR") {
       std::set<std::string> verifiers;
       for (const auto& verifier : config["verifiers"]) {
