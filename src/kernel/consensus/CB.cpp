@@ -35,7 +35,7 @@ void CryptoKernel::Consensus::CB::centralBanker() {
       // sign the block with our pubkey
       CryptoKernel::Blockchain::block Block = blockchain->generateVerifyingBlock(pubKey);
       std::string blockId = Block.getId().toString();
-      std::string signature = signMessage(blockId, pubKey, password);
+      std::string signature = CryptoKernel::Wallet::signMessage(blockId, pubKey, password);
       
       // create consensus data
       Json::Value consensusData = Block.getConsensusData(); 
@@ -65,7 +65,7 @@ bool CryptoKernel::Consensus::CB::isBlockBetter(Storage::Transaction* transactio
     const consensusData blockData = getConsensusData(block);
     const consensusData tipData = getConsensusData(tip);
     CryptoKernel::Crypto crypto;
-    crypto.setPublicKey(cbpubKey);
+    crypto.setPublicKey(cbPubKey);
     return crypto.verify(block.getId().toString(), blockData.signature);
 }
 
