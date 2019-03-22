@@ -94,7 +94,7 @@ private:
     std::string pubKey;
     std::string cbPubKey;
     std::unique_ptr<std::thread> cbThread;
-    CryptoKernel::Wallet wallet;
+    CryptoKernel::Wallet* wallet;
 };
 
 }
