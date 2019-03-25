@@ -796,6 +796,8 @@ std::string CryptoKernel::Wallet::signMessage(const std::string& message,
         }
     }
 
+    log->printf(LOG_LEVEL_INFO, "Wallet(): priv key: " + privKey);
+
     CryptoKernel::Crypto crypto;
     crypto.setPrivateKey(privKey);
 
