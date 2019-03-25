@@ -21,7 +21,7 @@
 		}
 	],
 	"miner" : false,
-	"pubKey" : "BAhEWf8b8Xzh68b4IY6F8GKL2z/1JS0O1MNbwVs4Uw6WwrtD/OufMgw24xSr7MMrm4+1Wt01t0Kv+dFyM2KsTKI=",
+	"pubKey" : "BD9ZsCX2tCzlJK22v3uX95Ub3yiif4Qd3STJd3HwPFLmmuMiXRU7TWWl63wRxTfUFhPkCq0xYjGVi8zHw/3cS/k=",
 	"rpcpassword" : "kZYkPm0yST7zgFU5fs6M1aSRB55Bo3cht60D+OhzGLo=",
 	"rpcuser" : "ckrpc",
 	"verbose" : true

@@ -23,6 +23,7 @@ void CryptoKernel::Consensus::CB::checkCB() {
 }
 
 void CryptoKernel::Consensus::CB::setWallet(CryptoKernel::Wallet* Wallet) {
+  log->printf(LOG_LEVEL_INFO, "Consensus::CB::setWallet(): set wallet");
   wallet = Wallet;
 }
 
