@@ -41,7 +41,9 @@ void CryptoKernel::Consensus::CB::checkCB() {
 
   
   //log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): consensus data: " + cdataout);
-  log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): our signature: " + pubKey);
+
+  log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): our pubkey: " + pubKey);
+  log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): our signature: " + ourSig);
   //log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): cb public key: " + cbPubKey);
   //log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): genesisBlockId: " + genesisBlockId);
   //log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): cbSignature: " + cbSignature);
