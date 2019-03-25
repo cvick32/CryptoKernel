@@ -20,7 +20,7 @@
 			"walletdb" : "./addressesdb"
 		}
 	],
-	"miner" : false,
+	"miner" : true,
 	"pubKey" : "BD9ZsCX2tCzlJK22v3uX95Ub3yiif4Qd3STJd3HwPFLmmuMiXRU7TWWl63wRxTfUFhPkCq0xYjGVi8zHw/3cS/k=",
 	"rpcpassword" : "kZYkPm0yST7zgFU5fs6M1aSRB55Bo3cht60D+OhzGLo=",
 	"rpcuser" : "ckrpc",
