@@ -31,13 +31,13 @@ void CryptoKernel::Consensus::CB::checkCB() {
   
   std::string genesisBlockId = blockchain->getBlockByHeight(1).getId().toString();
   std::string cbSignature = blockchain->getBlockByHeight(1).getConsensusData()["signature"].asString();
-  std::string signature = wallet->signMessage(genesisBlockId, pubKey, password);
+
   log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): public key: " + pubKey);
   log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): cb public key: " + cbPubKey);
   log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): genesisBlockId: " + genesisBlockId);
   log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): cbSignature: " + cbSignature);
   log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): signature: " + signature);
-  if (cbSignature == signature) {
+  if (wallet->verify(genesisBlockId, pubKey)) {
     centralBank = true;
     log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): you are the central bank!");
   } else {
