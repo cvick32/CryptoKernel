@@ -9,12 +9,9 @@ CryptoKernel::Consensus::CB::CB(CryptoKernel::Blockchain* blockchain,
     this->blockchain = blockchain;
     centralBank = false;
     this->pubKey = pubKey;
-    this->cbPubKey = blockchain->getBlockByHeight(1).getConsensusData()["publicKey"].asString();
     this->log = log;
     password = "froogy45";
-    
-    crypto = new CryptoKernel::Crypto();
-    crypto->setPublicKey(cbPubKey);
+  
 }
 
 CryptoKernel::Consensus::CB::~CB() {
@@ -28,6 +25,9 @@ void CryptoKernel::Consensus::CB::setWallet(CryptoKernel::Wallet* Wallet) {
 }
 
 void CryptoKernel::Consensus::CB::checkCB() {
+  std::string cbPubKey = blockchain->getBlockByHeight(1).getConsensusData()["publicKey"].asString();
+  crypto = new CryptoKernel::Crypto();
+  crypto->setPublicKey(cbPubKey);
   std::string hashPhrase = "lOtLEeRmdtE2FV4TIkoMwvkdnaB1ztBt1NCEfjts";
 
   std::string ourSignature = wallet->signMessage(hashPhrase, pubKey, password);
