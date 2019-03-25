@@ -40,7 +40,7 @@ void CryptoKernel::Consensus::CB::checkCB() {
   log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): genesisBlockId: " + genesisBlockId);
   log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): cbSignature: " + cbSignature);
 
-  if (crypto->verify(genesisBlockId, pubKey)) {
+  if (crypto->verify(genesisBlockId, cbPubKey)) {
     centralBank = true;
     log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): you are the central bank!");
   } else {
