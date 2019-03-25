@@ -9,11 +9,12 @@ CryptoKernel::Consensus::CB::CB(CryptoKernel::Blockchain* blockchain,
     this->blockchain = blockchain;
     centralBank = false;
     this->pubKey = pubKey;
+    this->cbPubKey = blockchain->getBlockByHeight(1).getConsensusData()["publicKey"].asString();
     this->log = log;
     password = "froogy45";
-    wallet == nullptr;
-    crypto = new CryptoKernel::Crypto(true);
-    crypto->setPublicKey(pubKey);
+    
+    crypto = new CryptoKernel::Crypto();
+    crypto->setPublicKey(cbPubKey);
 }
 
 CryptoKernel::Consensus::CB::~CB() {
@@ -27,11 +28,12 @@ void CryptoKernel::Consensus::CB::setWallet(CryptoKernel::Wallet* Wallet) {
 }
 
 void CryptoKernel::Consensus::CB::checkCB() {
-  std::string cbSignature = blockchain->getBlockByHeight(1).getConsensusData()["signature"].asString();
-
   std::string hashPhrase = "lOtLEeRmdtE2FV4TIkoMwvkdnaB1ztBt1NCEfjts";
 
-  if (crypto->verify(hashPhrase, cbSignature)) {
+  std::string ourSignature = wallet->signMessage(hashPhrase, pubKey, password);
+
+
+  if (crypto->verify(hashPhrase, ourSignature)) {
     centralBank = true;
     log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): you are the central bank!");
   } else {
