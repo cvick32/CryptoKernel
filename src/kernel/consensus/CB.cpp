@@ -26,7 +26,7 @@ void CryptoKernel::Consensus::CB::setWallet(CryptoKernel::Wallet* Wallet) {
 }
 
 void CryptoKernel::Consensus::CB::checkCB() {
-  Json::Value cdata = blockchain->getBlockByHeight(1).getConsensusData();
+  Json::Value cdata = blockchain->getBlockByHeight(1).toJson();
   // get cbPubKey from genesis block
   this->cbPubKey = blockchain->getBlockByHeight(1).getConsensusData()["publicKey"].asString();
   std::string cbSignature = blockchain->getBlockByHeight(1).getConsensusData()["signature"].asString();
