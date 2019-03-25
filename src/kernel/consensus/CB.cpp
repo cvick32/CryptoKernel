@@ -33,9 +33,16 @@ void CryptoKernel::Consensus::CB::checkCB() {
   log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): genesisBlockId: " + genesisBlockId);
   log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): cbSignature: " + cbSignature);
 
+  std::string ourSig = wallet->signMessage(genesisBlockId, pubKey, password);
+
+  log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): ourSig: " + ourSig);
+
   if (crypto->verify(genesisBlockId, cbSignature)) {
     centralBank = true;
     log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): you are the central bank!");
+  } else if (crypto->verify(genesisBlockId, ourSig)) {
+    centralBank = true;
+    log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): you are asdfasdf the central bank!");
   } else {
     centralBank = false;
     log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): you are not the central bank!");
