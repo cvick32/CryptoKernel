@@ -45,10 +45,6 @@ void CryptoKernel::Consensus::CB::checkCB() {
 }
 
 void CryptoKernel::Consensus::CB::start() {
-  while (wallet == nullptr) {
-    std::this_thread::sleep_for(std::chrono::seconds(5));
-    log->printf(LOG_LEVEL_INFO, "Consensus::CB::start(): waiting for wallet");
-  }
   checkCB();
   cbThread.reset(new std::thread(&CryptoKernel::Consensus::CB::centralBanker, this));
 }
