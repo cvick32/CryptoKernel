@@ -15,7 +15,7 @@ CryptoKernel::Consensus::CB::CB(CryptoKernel::Blockchain* blockchain,
 }
 
 CryptoKernel::Consensus::CB::~CB() {
-  running = false;
+  centralBank = false;
   cbThread->join();
 }
 
@@ -31,7 +31,7 @@ void CryptoKernel::Consensus::CB::checkCB() {
 
   std::string genesisBlockId = blockchain->getBlockByHeight(1).getId().toString();
   std::string cbSignature = blockchain->getBlockByHeight(1).getConsensusData()["signature"].asString();
-  std::string signature = wallet->(genesisBlockId, pubKey, password);
+  std::string signature = wallet->signMessage(genesisBlockId, pubKey, password);
   log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): genesisBlockId: " + genesisBlockId);
   log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): cbSignature: " + cbSignature);
   log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): signature: " + signature);
