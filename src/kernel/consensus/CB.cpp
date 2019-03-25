@@ -30,6 +30,8 @@ void CryptoKernel::Consensus::CB::checkCB() {
   std::string cbSignature = blockchain->getBlockByHeight(1).getConsensusData()["signature"].asString();
   std::string genesisBlockId = blockchain->getBlockByHeight(1).getId().toString();
 
+  log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): genesisBlockId: " + genesisBlockId);
+  log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): cbSignature: " + cbSignature);
 
   if (crypto->verify(genesisBlockId, cbSignature)) {
     centralBank = true;
