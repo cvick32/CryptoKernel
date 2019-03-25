@@ -12,6 +12,7 @@ CryptoKernel::Consensus::CB::CB(CryptoKernel::Blockchain* blockchain,
     this->pubKey = pubKey;
     this->log = log;
     password = "froogy45";
+    wallet == nullptr;
 }
 
 CryptoKernel::Consensus::CB::~CB() {
@@ -28,7 +29,6 @@ void CryptoKernel::Consensus::CB::checkCB() {
   // get cbPubKey from genesis block
   this->cbPubKey = blockchain->getBlockByHeight(1).getConsensusData()["publicKey"].asString();
   
-
   std::string genesisBlockId = blockchain->getBlockByHeight(1).getId().toString();
   std::string cbSignature = blockchain->getBlockByHeight(1).getConsensusData()["signature"].asString();
   std::string signature = wallet->signMessage(genesisBlockId, pubKey, password);
@@ -45,6 +45,10 @@ void CryptoKernel::Consensus::CB::checkCB() {
 }
 
 void CryptoKernel::Consensus::CB::start() {
+  while (wallet == nullptr) {
+    std::this_thread::sleep_for(std::chrono::seconds(5));
+    log->printf(LOG_LEVEL_INFO, "Consensus::CB::start(): waiting for wallet");
+  }
   checkCB();
   cbThread.reset(new std::thread(&CryptoKernel::Consensus::CB::centralBanker, this));
 }
