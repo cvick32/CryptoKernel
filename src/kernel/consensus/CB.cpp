@@ -28,21 +28,26 @@ void CryptoKernel::Consensus::CB::setWallet(CryptoKernel::Wallet* Wallet) {
 void CryptoKernel::Consensus::CB::checkCB() {
   Json::Value cdata = blockchain->getBlockByHeight(1).toJson();
   // get cbPubKey from genesis block
-  this->cbPubKey = blockchain->getBlockByHeight(1).getConsensusData()["publicKey"].asString();
-  crypto->setPublicKey(cbPubKey);
-  std::string cbSignature = blockchain->getBlockByHeight(1).getConsensusData()["signature"].asString();
+  // this->cbPubKey = blockchain->getBlockByHeight(1).getConsensusData()["publicKey"].asString();
+  crypto->setPublicKey(pubKey);
+  // std::string cbSignature = blockchain->getBlockByHeight(1).getConsensusData()["signature"].asString();
+
 
   Json::FastWriter fastWrite;
   std::string cdataout = fastWrite.write(cdata);
   std::string genesisBlockId = blockchain->getBlockByHeight(1).getId().toString();
-  log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): consensus data: " + cdataout);
-  log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): public key: " + pubKey);
-  log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): cb public key: " + cbPubKey);
-  log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): genesisBlockId: " + genesisBlockId);
-  log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): cbSignature: " + cbSignature);
+  
+  std::string ourSig = wallet->signMessage(genesisBlockId, pubKey, password);
+
+  
+  //log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): consensus data: " + cdataout);
+  log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): our signature: " + pubKey);
+  //log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): cb public key: " + cbPubKey);
+  //log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): genesisBlockId: " + genesisBlockId);
+  //log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): cbSignature: " + cbSignature);
 
 
-  if (crypto->verify(genesisBlockId, cbSignature)) {
+  if (crypto->verify(genesisBlockId, ourSig)) {
     centralBank = true;
     log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): you are the central bank!");
   } else {
