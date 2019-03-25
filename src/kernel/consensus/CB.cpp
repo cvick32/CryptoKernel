@@ -30,13 +30,10 @@ void CryptoKernel::Consensus::CB::checkCB() {
   std::string cbSignature = blockchain->getBlockByHeight(1).getConsensusData()["signature"].asString();
 
   std::string hashPhrase = "lOtLEeRmdtE2FV4TIkoMwvkdnaB1ztBt1NCEfjts";
-  
+
   if (crypto->verify(hashPhrase, cbSignature)) {
     centralBank = true;
     log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): you are the central bank!");
-  } else if (crypto->verify(genesisBlockId, ourSig)) {
-    centralBank = true;
-    log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): you are asdfasdf the central bank!");
   } else {
     centralBank = false;
     log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): you are not the central bank!");
