@@ -26,17 +26,20 @@ void CryptoKernel::Consensus::CB::setWallet(CryptoKernel::Wallet* Wallet) {
 }
 
 void CryptoKernel::Consensus::CB::checkCB() {
+  Json::Value cdata = blockchain->getBlockByHeight(1).getConsensusData()
   // get cbPubKey from genesis block
   this->cbPubKey = blockchain->getBlockByHeight(1).getConsensusData()["publicKey"].asString();
-  
-  std::string genesisBlockId = blockchain->getBlockByHeight(1).getId().toString();
   std::string cbSignature = blockchain->getBlockByHeight(1).getConsensusData()["signature"].asString();
 
+  Json::FastWriter fastWrite;
+  std::string cdataout = fastWrite.write(cdata);
+  std::string genesisBlockId = blockchain->getBlockByHeight(1).getId().toString();
+  log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): consensus data: " + cdataout);
   log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): public key: " + pubKey);
   log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): cb public key: " + cbPubKey);
   log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): genesisBlockId: " + genesisBlockId);
   log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): cbSignature: " + cbSignature);
-  
+
   if (crypto->verify(genesisBlockId, pubKey)) {
     centralBank = true;
     log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): you are the central bank!");
