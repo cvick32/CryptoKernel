@@ -92,9 +92,10 @@ private:
     // check if this is the central bank or not
     void checkCB();
 
-    bool running;
+    bool centralBank;
     std::string pubKey;
     std::string cbPubKey;
+    std::string password;
     std::unique_ptr<std::thread> cbThread;
     CryptoKernel::Wallet* wallet;
 };

@@ -13,7 +13,10 @@
       ],
       "timestamp" : 1501282954
    },
-   "consensusData" : null,
+   "consensusData" : {
+     "publicKey" : "BD9ZsCX2tCzlJK22v3uX95Ub3yiif4Qd3STJd3HwPFLmmuMiXRU7TWWl63wRxTfUFhPkCq0xYjGVi8zHw/3cS/k=",
+     "signature" : ""
+   },
    "data" : null,
    "height" : 1,
    "previousBlockId" : "0",

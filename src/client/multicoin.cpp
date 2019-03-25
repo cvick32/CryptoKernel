@@ -104,7 +104,7 @@ std::function<uint64_t(const uint64_t)> CryptoKernel::MulticoinLoader::getSubsid
     } else if (name == "CB") {
         return [](const uint64_t height) {
           const uint64_t COIN = 100000000;
-          return COIN * 1000;
+          return COIN * 10;
         };
     } else {
         throw std::runtime_error("Unknown subsidy function " + name);
