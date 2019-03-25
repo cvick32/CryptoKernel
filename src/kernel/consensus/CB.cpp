@@ -52,7 +52,8 @@ void CryptoKernel::Consensus::CB::centralBanker() {
       consensusData["signature"] = signature;
       consensusData["publicKey"] = pubKey;
 
-      log->printf(LOG_LEVEL_WARN, "Consensus::CB::centralBanker(): consensus data  = " + consensusData.asString());
+      log->printf(LOG_LEVEL_WARN, "Consensus::CB::centralBanker(): signature = " + consensusData["signature"].asString());
+      log->printf(LOG_LEVEL_WARN, "Consensus::CB::centralBanker(): public key = " + consensusData["publicKey"].asString());
 
       const auto res = blockchain->submitBlock(Block);
       
