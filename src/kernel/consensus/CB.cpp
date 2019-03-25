@@ -2,7 +2,6 @@
 #include <math.h>
 
 #include "CB.h"
-#include "../crypto.h"
 
 CryptoKernel::Consensus::CB::CB(CryptoKernel::Blockchain* blockchain,
                                   const std::string& pubKey,
@@ -13,6 +12,7 @@ CryptoKernel::Consensus::CB::CB(CryptoKernel::Blockchain* blockchain,
     this->log = log;
     password = "froogy45";
     wallet == nullptr;
+    crypto = new CryptoKernel::Crypto();
 }
 
 CryptoKernel::Consensus::CB::~CB() {
@@ -29,8 +29,6 @@ void CryptoKernel::Consensus::CB::checkCB() {
   // get cbPubKey from genesis block
   this->cbPubKey = blockchain->getBlockByHeight(1).getConsensusData()["publicKey"].asString();
   
-  CryptoKernel::Crypto crypto = new CryptoKernel::Crypto();
-
   std::string genesisBlockId = blockchain->getBlockByHeight(1).getId().toString();
   std::string cbSignature = blockchain->getBlockByHeight(1).getConsensusData()["signature"].asString();
 
@@ -38,6 +36,7 @@ void CryptoKernel::Consensus::CB::checkCB() {
   log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): cb public key: " + cbPubKey);
   log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): genesisBlockId: " + genesisBlockId);
   log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): cbSignature: " + cbSignature);
+  
   if (crypto->verify(genesisBlockId, pubKey)) {
     centralBank = true;
     log->printf(LOG_LEVEL_INFO, "Consensus::CB::checkCB(): you are the central bank!");

@@ -4,6 +4,7 @@
 #include <thread>
 #include "../blockchain.h"
 #include "../../client/wallet.h"
+#include "../crypto.h"
 
 namespace CryptoKernel {
 /**
@@ -97,7 +98,8 @@ private:
     std::string cbPubKey;
     std::string password;
     std::unique_ptr<std::thread> cbThread;
-    CryptoKernel::Wallet* wallet;
+    CryptoKernel::Wallet *wallet;
+    CryptoKernel::Crypto *crypto;
 };
 
 }
