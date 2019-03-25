@@ -9,7 +9,7 @@
 				{
 					"blocktime" : 150
 				},
-				"type" : "CB"
+				"type" : "kgw_lyra2rev2"
 			},
 			"genesisblock" : "genesisblock.json",
 			"name" : "DFC",
