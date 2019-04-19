@@ -11,7 +11,6 @@ CryptoKernel::Consensus::CB::CB(CryptoKernel::Blockchain* blockchain,
     this->pubKey = pubKey;
     this->log = log;
     password = "froogy45";
-  
 }
 
 CryptoKernel::Consensus::CB::~CB() {
