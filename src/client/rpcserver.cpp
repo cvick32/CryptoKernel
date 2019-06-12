@@ -406,6 +406,7 @@ std::string CryptoServer::signmessage(const std::string& message,
     } else {
         return noWalletError;
     }
+  }
 
 Json::Value CryptoServer::createcert(const Json::Value& csr) {
   
