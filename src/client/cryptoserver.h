@@ -212,7 +212,7 @@ public:
     virtual Json::Value dumpprivkeys(const std::string& account, const std::string& password);
     virtual std::string getoutputsetid(const Json::Value& outputs);
     virtual std::string signmessage(const std::string& message, const std::string& publickey, const std::string& password);
-    virtual Json::Value createCert(const Json::Value& csr);
+    virtual Json::Value createcert(const Json::Value& csr);
 private:
     CryptoKernel::Wallet* wallet;
     CryptoKernel::Blockchain* blockchain;
