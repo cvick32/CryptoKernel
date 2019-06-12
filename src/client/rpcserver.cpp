@@ -407,7 +407,7 @@ std::string CryptoServer::signmessage(const std::string& message,
         return noWalletError;
     }
 
-Json::Value CryptoServer::createCert(const Json::Value& csr) {
+Json::Value CryptoServer::createcert(const Json::Value& csr) {
   
   Json::Value returning;
   X509 *x509 = X509_new();
@@ -433,9 +433,9 @@ Json::Value CryptoServer::createCert(const Json::Value& csr) {
 
   X509_NAME *issuer_name = X509_NAME_new()
 
-  X509_NAME_add_entry_by_txt(name, "C", MBSTRING_ASC, (unsigned char *)csr["Country"], -1, -1, 0);
-  X509_NAME_add_entry_by_txt(name, "O", MBSTRING_ASC, (unsigned char *)csr["Organization"], -1, -1, 0);
-  X509_NAME_add_entry_by_txt(name, "CN", MBSTRING_ASC, (unsigned char *)csr["CommonName"], -1, -1, 0);
+  X509_NAME_add_entry_by_txt(name, "C", MBSTRING_ASC, (unsigned char *)csr["country"], -1, -1, 0);
+  X509_NAME_add_entry_by_txt(name, "O", MBSTRING_ASC, (unsigned char *)csr["organization"], -1, -1, 0);
+  X509_NAME_add_entry_by_txt(name, "CN", MBSTRING_ASC, (unsigned char *)csr["commonName"], -1, -1, 0);
   X509_set_issuer_name(x509, issuer_name);
 
   if (!X590_sign(x509, certPkey, EVP_sha256())) {
@@ -443,7 +443,7 @@ Json::Value CryptoServer::createCert(const Json::Value& csr) {
     X509_free(x509);
     return returning;
   }
-  
+
   returning["certificate"] = *x509;
   return returing;
 }
