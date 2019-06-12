@@ -25,6 +25,7 @@
 
 #include <openssl/pem.h>
 #include <openssl/x509.h>
+#include <openssl/evp.h>
 
 const std::string noWalletError = "No wallet attached to this RPC server";
 
@@ -418,12 +419,16 @@ Json::Value CryptoServer::createcert(const Json::Value& csr) {
     return returning;
   }
 
+  unsigned char *subject_pubkey = (unsigned char *)csr["publickey"];
+  
+  EVP_PKEY *subject_pubkey = EVP_PKEY_new_raw_public_key(949, subject_pubkey, sizeof(subject_pubkey));
+
   ASN1_INTEGER_set(X509_get_serialNumber(x509), 1);
 
   X509_gmtime_adj(X509_get_notBefore(x509), 0);
   X509_gmtime_adj(X509_get_notAfter(x509), 31536000L);
 
-  X509_set_pubkey(x509, csr["publicKey"]);
+  X509_set_pubkey(x509, subject_pubkey);
 
   X509_NAME *subject_name = X509_get_subject_name(x509);
 
@@ -446,6 +451,6 @@ Json::Value CryptoServer::createcert(const Json::Value& csr) {
   }
 
   returning["certificate"] = *x509;
-  return returing;
+  return returning;
 }
 }
