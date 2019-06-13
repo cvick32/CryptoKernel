@@ -419,30 +419,28 @@ Json::Value CryptoServer::createcert(const Json::Value& csr) {
     return returning;
   }
 
-  unsigned char *subject_pubkey = (unsigned char *)csr["publickey"];
-  
-  EVP_PKEY *subject_pubkey = EVP_PKEY_new_raw_public_key(949, subject_pubkey, sizeof(subject_pubkey));
+  unsigned char *subject_pubkey = csr["publickey"].asString();
+  EVP_PKEY *subject_pkey = EVP_PKEY_new_raw_public_key(949, subject_pubkey, sizeof(subject_pubkey));
 
   ASN1_INTEGER_set(X509_get_serialNumber(x509), 1);
 
   X509_gmtime_adj(X509_get_notBefore(x509), 0);
   X509_gmtime_adj(X509_get_notAfter(x509), 31536000L);
 
-  X509_set_pubkey(x509, subject_pubkey);
+  X509_set_pubkey(x509, subject_pkey);
 
-  X509_NAME *subject_name = X509_get_subject_name(x509);
-
-  X509_NAME_add_entry_by_txt(subject_name, "C", MBSTRING_ASC, (unsigned char *)"US", -1, -1, 0);
-  X509_NAME_add_entry_by_txt(subject_name, "O", MBSTRING_ASC, (unsigned char *)"Central Bank", -1, -1, 0);
-  X509_NAME_add_entry_by_txt(subject_name, "CN", MBSTRING_ASC, (unsigned char *)"Central Bank", -1, -1, 0);
-  X509_set_subject_name(x509, subject_name);
-
-  X509_NAME *issuer_name = X509_NAME_new()
-
-  X509_NAME_add_entry_by_txt(name, "C", MBSTRING_ASC, (unsigned char *)csr["country"], -1, -1, 0);
-  X509_NAME_add_entry_by_txt(name, "O", MBSTRING_ASC, (unsigned char *)csr["organization"], -1, -1, 0);
-  X509_NAME_add_entry_by_txt(name, "CN", MBSTRING_ASC, (unsigned char *)csr["commonName"], -1, -1, 0);
+  X509_NAME *issuer_name = X509_get_issuer_name(x509);
   X509_set_issuer_name(x509, issuer_name);
+  X509_NAME_add_entry_by_txt(issuer_name, "C", MBSTRING_ASC, (unsigned char *)"US", -1, -1, 0);
+  X509_NAME_add_entry_by_txt(issuer_name, "O", MBSTRING_ASC, (unsigned char *)"Central Bank", -1, -1, 0);
+  X509_NAME_add_entry_by_txt(issuer_name, "CN", MBSTRING_ASC, (unsigned char *)"Central Bank", -1, -1, 0);
+  
+  X509_NAME *subject_name = X509_NAME_new();
+  X509_set_subject_name(x509, subject_name);
+  X509_NAME_add_entry_by_txt(subject_name, "C", MBSTRING_ASC, (unsigned char *)csr["country"], -1, -1, 0);
+  X509_NAME_add_entry_by_txt(subject_name, "O", MBSTRING_ASC, (unsigned char *)csr["organization"], -1, -1, 0);
+  X509_NAME_add_entry_by_txt(subject_name, "CN", MBSTRING_ASC, (unsigned char *)csr["commonName"], -1, -1, 0);
+  
 
   if (!X590_sign(x509, certPkey, EVP_sha256())) {
     returning["error"] = "Could not sign certificate."

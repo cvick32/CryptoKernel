@@ -20,7 +20,7 @@
 
 #include <jsonrpccpp/server.h>
 #include <openssl/x509.h>
-
+#include <openssl/evp.h>
 #include "wallet.h"
 
 class CryptoRPCServer : public jsonrpc::AbstractServer<CryptoRPCServer> {

@@ -13,7 +13,7 @@ sudo apt-get update && sudo apt-get install -y \
     libcppunit-dev
 
 cd /tmp
-wget https://www.openssl.org/source/openssl-1.1.0f.tar.gz
+wget https://www.openssl.org/source/openssl-1.1.1c.tar.gz
 tar -xvzf openssl-1.1.0f.tar.gz
 cd openssl-1.1.0f
 ./config
