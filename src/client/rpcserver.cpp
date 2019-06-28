@@ -419,7 +419,7 @@ Json::Value CryptoServer::createcert(const Json::Value& csr) {
     return returning;
   }
 
-  unsigned char *subject_pubkey = csr["publickey"].asString();
+  std::string subject_pubkey = csr["publicKey"].asString();
   EVP_PKEY *subject_pkey = EVP_PKEY_new_raw_public_key(949, subject_pubkey, sizeof(subject_pubkey));
 
   ASN1_INTEGER_set(X509_get_serialNumber(x509), 1);
@@ -437,12 +437,12 @@ Json::Value CryptoServer::createcert(const Json::Value& csr) {
   
   X509_NAME *subject_name = X509_NAME_new();
   X509_set_subject_name(x509, subject_name);
-  X509_NAME_add_entry_by_txt(subject_name, "C", MBSTRING_ASC, (unsigned char *)csr["country"], -1, -1, 0);
-  X509_NAME_add_entry_by_txt(subject_name, "O", MBSTRING_ASC, (unsigned char *)csr["organization"], -1, -1, 0);
-  X509_NAME_add_entry_by_txt(subject_name, "CN", MBSTRING_ASC, (unsigned char *)csr["commonName"], -1, -1, 0);
+  X509_NAME_add_entry_by_txt(subject_name, "C", MBSTRING_ASC, csr["country"].asString(), -1, -1, 0);
+  X509_NAME_add_entry_by_txt(subject_name, "O", MBSTRING_ASC, csr["organization"].asString(), -1, -1, 0);
+  X509_NAME_add_entry_by_txt(subject_name, "CN", MBSTRING_ASC, csr["commonName"].asString(), -1, -1, 0);
   
 
-  if (!X590_sign(x509, certPkey, EVP_sha256())) {
+  if (!X509_sign(x509, certPkey, EVP_sha256())) {
     returning["error"] = "Could not sign certificate."
     X509_free(x509);
     return returning;
