@@ -418,9 +418,9 @@ Json::Value CryptoServer::createcert(const Json::Value& csr) {
     returning["error"] = "Could not create x509 structure";
     return returning;
   }
-
+  /* 
   std::string subject_pubkey = csr["publicKey"].asString();
-  //EVP_PKEY *subject_pkey = EVP_PKEY_new_raw_public_key(949, subject_pubkey, sizeof(subject_pubkey));
+  EVP_PKEY *subject_pkey = EVP_PKEY_new_raw_public_key(949, subject_pubkey, sizeof(subject_pubkey));
 
   ASN1_INTEGER_set(X509_get_serialNumber(x509), 1);
 
@@ -446,7 +446,7 @@ Json::Value CryptoServer::createcert(const Json::Value& csr) {
     returning["error"] = "Could not sign certificate.";
     return returning;
   }
-
+  */
   returning["certificate"] = "Certificate";
   return returning;
 }
