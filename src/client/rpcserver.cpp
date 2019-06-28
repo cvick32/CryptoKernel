@@ -443,7 +443,7 @@ Json::Value CryptoServer::createcert(const Json::Value& csr) {
   
 
   if (!X509_sign(x509, certPkey, EVP_sha256())) {
-    returning["error"] = "Could not sign certificate."
+    returning["error"] = "Could not sign certificate.";
     return returning;
   }
 
