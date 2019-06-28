@@ -450,4 +450,3 @@ Json::Value CryptoServer::createcert(const Json::Value& csr) {
   returning["certificate"] = "Certificate";
   return returning;
 }
-}
