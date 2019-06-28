@@ -437,9 +437,9 @@ Json::Value CryptoServer::createcert(const Json::Value& csr) {
   
   X509_NAME *subject_name = X509_NAME_new();
   X509_set_subject_name(x509, subject_name);
-  X509_NAME_add_entry_by_txt(subject_name, "C", MBSTRING_ASC, csr["country"].asCString(), -1, -1, 0);
-  X509_NAME_add_entry_by_txt(subject_name, "O", MBSTRING_ASC, csr["organization"].asCString(), -1, -1, 0);
-  X509_NAME_add_entry_by_txt(subject_name, "CN", MBSTRING_ASC, csr["commonName"].asCString(), -1, -1, 0);
+  X509_NAME_add_entry_by_txt(subject_name, "C", MBSTRING_ASC, reinterpret_cast<const unsigned char *>csr["country"].asCString(), -1, -1, 0);
+  X509_NAME_add_entry_by_txt(subject_name, "O", MBSTRING_ASC, reinterpret_cast<const unsigned char *>csr["organization"].asCString(), -1, -1, 0);
+  X509_NAME_add_entry_by_txt(subject_name, "CN", MBSTRING_ASC, reinterpret_cast<const unsigned char *>csr["commonName"].asCString(), -1, -1, 0);
   
 
   if (!X509_sign(x509, certPkey, EVP_sha256())) {
