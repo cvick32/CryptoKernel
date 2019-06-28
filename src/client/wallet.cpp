@@ -558,6 +558,7 @@ CryptoKernel::Wallet::Account CryptoKernel::Wallet::getAccountByKey(
 CryptoKernel::Wallet::Account CryptoKernel::Wallet::getAccountByKey(
     CryptoKernel::Storage::Transaction* dbTx, const std::string& pubKey) {
     const Json::Value accName = accounts->get(dbTx, pubKey, 0);
+    log->printf(LOG_LEVEL_INFO, "Consensus::CB::setWallet(): pubkey: " + pubkey);
     if(!accName.isNull()) {
         const Account acc = Account(accounts->get(dbTx, accName.asString()));
         return acc;
